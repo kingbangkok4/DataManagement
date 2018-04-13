@@ -51,8 +51,12 @@ namespace DataManagement.Business.BusinessLayer
             {
                 var dtNow = CommonBL.GetDateTimeNow(db);
                 var ckBorrow = db.Borrows.Where(m => m.BorrowID == borrowID).FirstOrDefault();
+               
                 if (ckBorrow != null)
                 {
+                    var ckResource = db.Resources.Where(m => m.ResourceID == ckBorrow.ResourceID).FirstOrDefault();
+                    ckResource.NumResource = ckResource.NumResource + ckBorrow.Numborrow;
+
                     ckBorrow.StaffID = user;
                     ckBorrow.ReturnDT = dtNow;
 
