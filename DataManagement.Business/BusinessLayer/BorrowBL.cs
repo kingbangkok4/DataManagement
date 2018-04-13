@@ -50,8 +50,7 @@ namespace DataManagement.Business.BusinessLayer
             try
             {
                 var dtNow = CommonBL.GetDateTimeNow(db);
-                var ckBorrow = db.Borrows.Where(m => m.BorrowID == borrowID).FirstOrDefault();
-               
+                var ckBorrow = db.Borrows.Where(m => m.BorrowID == borrowID).FirstOrDefault();             
                 if (ckBorrow != null)
                 {
                     var ckResource = db.Resources.Where(m => m.ResourceID == ckBorrow.ResourceID).FirstOrDefault();
