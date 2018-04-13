@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Mathematics_DB" Class="DataManagementModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-1098PBB\MSEXPRESS;Initial Catalog=Mathematics_DB;Persist Security Info=True;User ID=sa" SettingsObjectName="DataManagement.Business.Properties.Settings" SettingsPropertyName="Mathematics_DBConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Personal" Member="Personals">
+    <Type Name="Personal">
+      <Column Name="PersonalID" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PersonalFname" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PersonalName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PersonalLName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PersonalAddress" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PersonalEmail" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PersonalPic" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Personal_Borrow" Member="Borrows" ThisKey="PersonalID" OtherKey="PersonalID" Type="Borrow" />
+      <Association Name="Personal_Reservation" Member="Reservations" ThisKey="PersonalID" OtherKey="PersonalID" Type="Reservation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Resource" Member="Resources">
+    <Type Name="Resource">
+      <Column Name="ResourceID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ResourcePic" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ResourceName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="NumResource" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ResourceDetail" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Resource_Borrow" Member="Borrows" ThisKey="ResourceID" OtherKey="ResourceID" Type="Borrow" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Room" Member="Rooms">
+    <Type Name="Room">
+      <Column Name="RoomID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoomPic" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RoomDetail" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Room_Reservation" Member="Reservations" ThisKey="RoomID" OtherKey="RoomID" Type="Reservation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Borrow" Member="Borrows">
+    <Type Name="Borrow">
+      <Column Name="BorrowID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ResourceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PersonalID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="BorrowDT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StaffID" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ReturnDT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Numborrow" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Resource_Borrow" Member="Resource" ThisKey="ResourceID" OtherKey="ResourceID" Type="Resource" IsForeignKey="true" />
+      <Association Name="Personal_Borrow" Member="Personal" ThisKey="PersonalID" OtherKey="PersonalID" Type="Personal" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reservation" Member="Reservations">
+    <Type Name="Reservation">
+      <Column Name="ReservationID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoomID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PersonalID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ReservationDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="StartTime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="EndTime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="TimeStamp" Type="System.Data.Linq.Binary" DbType="rowversion" CanBeNull="true" IsVersion="true" />
+      <Association Name="Personal_Reservation" Member="Personal" ThisKey="PersonalID" OtherKey="PersonalID" Type="Personal" IsForeignKey="true" />
+      <Association Name="Room_Reservation" Member="Room" ThisKey="RoomID" OtherKey="RoomID" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

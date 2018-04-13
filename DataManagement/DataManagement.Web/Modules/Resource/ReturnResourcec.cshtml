@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "คืนอุปกรณ์";
+}
+@using DataManagement.Business.Models
+
+<div class="page-header">
+    <div class="tool-buttons" padding-bottom:5px;">
+        <div class="row">
+            <div class="col-md-6">
+                @*<a class="btn btn-success" style="width: 120px;" href="#" onclick="_Save()"><span class="fa fa-save"></span> บันทึก</a>
+                    <a class="btn btn-danger" style="width: 150px;" href="#" onclick=""><span class="fa fa-reply"></span> ล้างข้อมูล</a>*@
+            </div>
+            <div class="col-md-6 pull-right">
+                @*<h1>@ViewData["Title"]<small></small></h1>*@
+                <span class="pull-right" style="margin-right:10px;"><b>@ViewData["Title"]</b></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-mode box box-primary">
+                <div class="box-header with-border">
+                    <h4 class="box-title">ข้อมูลการยืมอุปกรณ์</h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        @*<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding content-margin">
+                    @(Html.Kendo().Grid<Borrow>()
+                                .Name("gridBorrow")
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(c => c.BorrowID).Title("รหัสการยืม").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" }).Width(100);
+                                    columns.Bound(c => c.ResourceID).Title("รหัสอุปกรณ์").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                    columns.Bound(c => c.PersonalID).Title("ผู้ยืม").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                    columns.Bound(c => c.BorrowDT).Format("{0:dd/MM/yyyy HH:mm}").Title("วันที่ยืม").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                    columns.Bound(c => c.Numborrow).Title("จำนวนที่ยืม").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                })
+                                .HtmlAttributes(new { style = "height: 550px;" })
+                                .Scrollable()
+                                .Selectable()
+                                .Events(ev => ev.Change("doOnRowBorrowSelect"))
+                                //.Groupable()
+                                .Sortable()
+                                //.Pageable(pageable => pageable
+                                //   .Refresh(true)
+                                //   .PageSizes(true)
+                                //   .ButtonCount(5))
+                                .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .Read(read => read.Action("GetBorrow", "ReturnResource"))
+                                .PageSize(20))
+                    )
+                    @Html.Hidden("txtBorrowID", "")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //----------- On Select Row Grid Kendo ui ----
+    function doOnRowBorrowSelect(e) {
+
+        var selectedItem = this.dataItem(this.select());
+        var strBorrowID = "รหัสการยืม : " + selectedItem.BorrowID;
+
+        $("#txtBorrowID").val(selectedItem.BorrowID);
+        var msg = "ต้องการคืน " + strBorrowID + " ?";
+        Q.confirm(msg,
+            () => {
+                _Save();
+            }
+            , {
+                onNo: function () {
+                    element.dialog().dialog('ปิด');
+                }
+            });
+
+    //$("#GridBorrowDetail").getKendoGrid().dataSource.read();
+    }
+    //----------------------------------------------
+    function _Save() {
+            $.ajax({
+                url: '@Url.Action("SaveReturnResource", "ReturnResource")',
+                data: { borrowID: $("#txtBorrowID").val().trim()},
+                type: "post",
+                dataType: "json",
+                async: false,
+                success: function(result) {
+                    if (result.ret == "")
+                    {
+                        Q.information("บันทึกสำเร็จ");
+                        $("#gridBorrow").getKendoGrid().dataSource.read();
+                    }
+                    else
+                    {
+                        Q.alert(result.ret);
+                    }
+                }
+        });       
+    }
+
+</script>
+

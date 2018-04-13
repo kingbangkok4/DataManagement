@@ -1,0 +1,69 @@
+﻿@using Kendo.Mvc.UI
+@using DataManagement.Business.Models
+
+<div class="box-body no-padding content-margin">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="pad">
+                <div class="row">
+                    <div class="col-md-12 center align_center">
+                        @Html.Label("Resource ID : xxxxxx", new { id = "lblResourceID" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 center align_center">
+                        @Html.Label("Resource Name : xxxxxx", new { id = "lblResourceName" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 center align_center">
+                        <img class="detail-photo" id="imgResource" src="#" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 center align_center ">
+                        @Html.Label("Resource Detail : xxxxxx", new { id = "lblResourceDetail" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            @Html.Label("lbNum", "จำนวนที่ต้องการยืม", new { @class = "" })
+            @Html.TextBox("txtNum", "1", new { @class = "form-control text-right", @min = "1", @step = "1", @style = "", onkeypress = "return isNumber(event)", maxlength = 4, @type = "number" })
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //$(document).ready(function () {
+
+
+    //});
+    function getSearchReservationText() {
+        return { ResourceID: $("#txtResourceID").val().trim() };
+    }
+
+    function startChange() {
+        var startTime = this.value(),
+            endPicker = $("#tEnd").data("kendoTimePicker");
+
+        if (startTime) {
+            startTime = new Date(startTime);
+
+            // endPicker.max(startTime);
+
+            startTime.setMinutes(startTime.getMinutes() + this.options.interval);
+
+            //endPicker.min(startTime);
+            endPicker.value(startTime);
+        }
+    }
+
+</script>

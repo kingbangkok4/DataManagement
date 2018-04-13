@@ -1,0 +1,165 @@
+﻿@{
+    ViewData["Title"] = "จองห้องสอน";
+}
+@using DataManagement.Business.Models
+
+<div class="page-header">
+    <div class="tool-buttons" padding-bottom:5px;">
+        <div class="row">
+            <div class="col-md-6">
+                @*<a class="btn btn-success" style="width: 120px;" href="#" onclick="_Save()"><span class="fa fa-save"></span> บันทึก</a>
+                <a class="btn btn-danger" style="width: 150px;" href="#" onclick=""><span class="fa fa-reply"></span> ล้างข้อมูล</a>*@
+            </div>
+            <div class="col-md-6 pull-right">
+                @*<h1>@ViewData["Title"]<small></small></h1>*@
+                <span class="pull-right" style="margin-right:10px;"><b>@ViewData["Title"]</b></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-mode box box-primary">
+                <div class="box-header with-border">
+                    <h4 class="box-title">ข้อมูลห้องสอน</h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        @*<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding content-margin">
+                    @(Html.Kendo().Grid<Room>()
+.Name("gridRoom")
+.Columns(columns =>
+{
+    columns.Bound(c => c.RoomPic).ClientTemplate(
+        @"<div class='customer-photo'
+                                                style='background-image: url(" + @Url.Content("~/Content/images/#:data.RoomPic#") + ");'></div><div class='customer-name' style='font-size:large;margin-left:150px;'>#: RoomID #</div>").Title("")
+    .Width(240);
+    columns.Bound(c =>
+    c.RoomPic).Hidden(true);
+    columns.Bound(c => c.RoomID).Hidden(true);
+    columns.Bound(c => c.RoomDetail).Hidden(true);
+})
+    .HtmlAttributes(new { style = "height: 550px;" })
+    .Scrollable()
+    .Selectable()
+    .Events(ev => ev.Change("doOnRowRoomSelect"))
+    //.Groupable()
+    .Sortable()
+    //.Pageable(pageable => pageable
+    //   .Refresh(true)
+    //   .PageSizes(true)
+    //   .ButtonCount(5))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .Read(read => read.Action("GetRoom", "Room"))
+    .PageSize(20)
+    )
+                    )
+                   @Html.Hidden("txtRoomID", "") 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Room Detail -->
+<div class="modal fade" id="modalRoomDetail" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header modal-success">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">ปิด</span>
+                </button>
+                <h4 class="modal-title" id="modalLabelRoomDetail">
+                    รายละเอียดห้องสอน
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                @Html.Partial("/Views/Shared/Partial/_RoomDetailPartial.cshtml")
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success" onclick="_Save()">
+                                จองห้องสอน
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //----------- On Select Row Grid Kendo ui ----
+    function doOnRowRoomSelect(e) {
+        $('#modalRoomDetail').modal('show');
+       
+
+        var selectedItem = this.dataItem(this.select());
+        var strRoomID = "รหัสห้องสอน : " + selectedItem.RoomID;
+        var strRoomDetail = selectedItem.RoomDetail;
+        var urlImgRoom = "../Content/images/" + selectedItem.RoomPic;
+        $("#txtRoomID").val(selectedItem.RoomID);
+        //alert($("#txtRoomID").val().trim());
+        //_CloseOperator();
+        $('#lblRoomID').text(strRoomID);
+        $('#lblRoomDetail').text(strRoomDetail);
+        document.getElementById("imgRoom").src = urlImgRoom;
+
+        $("#GridRoomDetail").getKendoGrid().dataSource.read();
+    }
+    //----------------------------------------------
+    function _Save() {
+        var rDate = $("#dtReservation").data().kendoDatePicker.value();
+        var sTime = $("#tStart").data().kendoTimePicker.value();
+        var eTime = $("#tEnd").data().kendoTimePicker.value();
+
+        if (rDate != null && sTime != null && eTime != null) {
+            $.ajax({
+                url: '@Url.Action("SaveResevation", "Room")',
+                data: { roomID: $("#txtRoomID").val().trim(), rDate: cd2s(rDate), sTime: cd2s(sTime), eTime: cd2s(eTime)},
+                type: "post",
+                dataType: "json",
+                async: false,
+                success: function(result) {
+                    if (result.ret == "")
+                    {
+                        Q.information("บันทึกสำเร็จ");
+                        CloseRoomDetail();
+                    }
+                    else
+                    {
+                        Q.alert(result.ret);
+                    }
+                }
+        });
+        } else {
+            Q.alert("กรุณาใส่ข้อมูลให้ครบถ้วน !!");
+        }      
+    }
+
+    function CloseRoomDetail() {
+        $('#modalRoomDetail').modal('hide');
+    }
+</script>
+

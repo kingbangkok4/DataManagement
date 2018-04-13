@@ -1,0 +1,134 @@
+﻿@using Kendo.Mvc.UI
+@using DataManagement.Business.Models
+
+<div class="box-body no-padding content-margin">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="pad">
+                <div class="row">
+                    <div class="col-md-12 center align_center">
+                        @Html.Label("Room ID : xxxxxx", new { id = "lblRoomID" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 center align_center">
+                        <img class="detail-photo" id="imgRoom" src="#" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 center align_center ">
+                        @Html.Label("Room Detail : xxxxxx", new { id = "lblRoomDetail" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("lbDTReservation", "วันที่")
+                @(Html.Kendo().DatePicker()
+                        .Name("dtReservation")
+                         .Format("dd/MM/yyyy")
+                                .HtmlAttributes(new { style = "width: 100%;", @class = "form-control" })
+                )
+                @*, onkeydown = "javascript:return false;"*@
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label("lbDTStart", "เวลาสิ้นสุด")
+                @(Html.Kendo().TimePicker()
+                            .Name("tStart")
+                            .Value("6:00 AM")
+                            .Min("6:00 AM")
+                            .Max("11:00 PM")
+                            .Events(e => e.Change("startChange"))
+                            .HtmlAttributes(new { style = "width:100%;" })
+                )
+                @*, onkeydown = "javascript:return false;"*@
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label("lbDTEnd", "เวลาสิ้นสุด")
+                @(Html.Kendo().TimePicker()
+                            .Name("tEnd")
+                            .Value("7:30 AM")
+                            .Min("7:00 AM")
+                            .Max("11:30 AM")
+                            .HtmlAttributes(new { style = "width:100%;" })
+                )
+                @*, onkeydown = "javascript:return false;"*@
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="pad">
+                @Html.Label("lblResevation", "รายการที่มีการจองห้องสอน")
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="pad">
+                <!-- Map will be created here -->
+                @*<div id="world-map-markers" style="height: 325px;"></div>*@
+                @(Html.Kendo().Grid<Reservation>()
+                                                .Name("GridRoomDetail")
+                                                .AutoBind(false)
+                                                .Columns(columns =>
+                                                {
+                                                    columns.Bound(m => m.PersonalID).Title("ผู้จอง").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                                    columns.Bound(m => m.ReservationDate).Format("{0:dd/MM/yyyy}").Title("วันที่").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                                    columns.Bound(m => m.StartTime).ClientTemplate("#= StartTime.Hours #:#= kendo.toString(StartTime.Minutes, '00') #").Title("เวลาเริ่มต้น").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                                    columns.Bound(m => m.EndTime).ClientTemplate("#= EndTime.Hours #:#= kendo.toString(EndTime.Minutes, '00') #").Title("เวลาสิ้นสุด").HeaderHtmlAttributes(new { style = "text-align:center;" }).HtmlAttributes(new { style = "text-align:center;" });
+                                                })
+                                                .HtmlAttributes(new { style = "height: 40%;" })
+                                                .Sortable()
+                                                .Scrollable()
+                                                .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Read(read => read
+                                                                    .Action("GetReservation", "Room")
+                                                                    .Data("getSearchReservationText")
+                                                            )
+
+                                                    )
+                )
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+</div>
+
+<script type="text/javascript">
+    //$(document).ready(function () {
+
+
+    //});
+    function getSearchReservationText() {
+        return { roomID: $("#txtRoomID").val().trim() };
+    }
+
+    function startChange() {
+        var startTime = this.value(),
+            endPicker = $("#tEnd").data("kendoTimePicker");
+
+        if (startTime) {
+            startTime = new Date(startTime);
+
+           // endPicker.max(startTime);
+
+            startTime.setMinutes(startTime.getMinutes() + this.options.interval);
+
+            //endPicker.min(startTime);
+            endPicker.value(startTime);
+        }
+    }
+
+</script>
