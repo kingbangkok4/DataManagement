@@ -1,1 +1,74 @@
-﻿
+﻿@using Kendo.Mvc.UI
+@using DataManagement.Business.Models
+@model IEnumerable<ReservationModel>
+
+<div class="responsive-message"></div>
+
+@(Html.Kendo().PivotConfigurator()
+            .Name("configurator")
+            .HtmlAttributes(new { @class = "hidden-on-narrow" })
+            .Filterable(true)
+            .Sortable()
+            .Height(400)
+)
+
+@(Html.Kendo().PivotGrid<ReservationModel>()
+            .Name("pivotgrid")
+            .HtmlAttributes(new { @class = "hidden-on-narrow" })
+            .Filterable(true)
+            .Sortable()
+            .Configurator("#configurator")
+            .ColumnWidth(120)
+            .Height(570)
+            .BindTo(Model)
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Schema(schema => schema
+                    .Model(m => m.Field("PersonalID", typeof(string)).From("PersonalID"))
+                    .Cube(cube => cube
+                        .Dimensions(dimensions =>
+                        {
+                            dimensions.Add(model => model.ReservationID).Caption("รหัสการจอง");
+                            dimensions.Add(model => model.RoomID).Caption("รหัสห้อง");
+                            dimensions.Add(model => model.PersonalID).Caption("ผู้จอง");
+                        })
+                    .Measures(measures =>
+                    {
+                        measures.Add("Average").Field(model => model.RoomID).AggregateName("Average");
+                        measures.Add("Sum").Field(model => model.Count).AggregateName("Sum");
+                    })
+                    ))
+                .Columns(columns =>
+                {
+                    columns.Add("ReservationID").Expand(true);
+                    columns.Add("RoomID");
+                })
+                //.Rows(rows => rows.Add("Discontinued").Expand(true))
+                .Measures(measures => measures.Values("Sum"))
+                .Events(e => e.Error("onError"))
+            )
+)
+
+<script>
+    function onError(e) {
+        alert("error: " + kendo.stringify(e.errors[0]));
+    }
+</script>
+
+<style>
+    #pivotgrid {
+        display: inline-block;
+        vertical-align: top;
+        width: 70%;
+    }
+
+    #configurator {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .hidden-on-narrow {
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>

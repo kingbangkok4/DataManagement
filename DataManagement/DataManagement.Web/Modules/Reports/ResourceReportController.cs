@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace DataManagement.Modules.Report.Page
 {
     [PageAuthorize("manager")]
-    [RoutePrefix("Report/ResourceReport"), Route("{action=index}")]
+    [RoutePrefix("Reports/ResourceReport"), Route("{action=index}")]
     public class ResourceReportController : Controller
     {
         // GET: ResourceReport

@@ -1,1 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Class="CommonModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Class="CommonModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="" Member="ReservationModels">
+    <Type Name="ReservationModel">
+      <Column Name="ReservationID" Type="System.Int64" CanBeNull="false" />
+      <Column Name="RoomID" Type="System.String" CanBeNull="false" />
+      <Column Name="PersonalID" Type="System.String" CanBeNull="false" />
+      <Column Name="ReservationDate" Type="System.DateTimeOffset" CanBeNull="true" />
+      <Column Name="StartTime" Type="System.TimeSpan" CanBeNull="true" />
+      <Column Name="EndTime" Type="System.TimeSpan" CanBeNull="true" />
+      <Column Member="PersonalName" Type="System.String" CanBeNull="false" />
+      <Column Member="Posision" Type="System.String" CanBeNull="false" />
+      <Column Member="RoomDetail" Type="System.String" CanBeNull="false" />
+      <Column Member="Count" Type="System.Int32" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="BorrowModels">
+    <Type Name="BorrowModel">
+      <Column Member="BorrowID" Type="System.Int64" CanBeNull="false" />
+      <Column Member="ResourceID" Type="System.Int64" CanBeNull="false" />
+      <Column Member="ResourceName" Type="System.String" CanBeNull="false" />
+      <Column Member="ResourceDetail" Type="System.String" CanBeNull="false" />
+      <Column Member="PersonalID" Type="System.String" CanBeNull="false" />
+      <Column Member="PersonalName" Type="System.String" CanBeNull="false" />
+      <Column Member="BorrowDT" Type="System.DateTime" CanBeNull="true" />
+      <Column Member="StaffID" Type="System.String" CanBeNull="false" />
+      <Column Member="ReturnDT" Type="System.DateTime" CanBeNull="true" />
+      <Column Member="Numborrow" Type="System.Int32" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

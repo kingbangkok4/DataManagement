@@ -1,4 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="CommonModel">
   <DataContextMoniker Name="/CommonModelDataContext" />
+  <nestedChildShapes>
+    <classShape Id="91800e3a-d733-4e42-98bd-661218832142" absoluteBounds="0.5, 0.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/CommonModelDataContext/ReservationModel" />
+      <nestedChildShapes>
+        <elementListCompartment Id="937b159b-bec0-4a0f-9c3b-cdb873059613" absoluteBounds="0.515, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="45daf9a7-e682-4008-b34a-7a3b2c4e43d0" absoluteBounds="3.25, 0.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/CommonModelDataContext/BorrowModel" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cbfdde2b-12cf-41df-94c3-ceae653e67c4" absoluteBounds="3.2649999999999997, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
 </ordesignerObjectsDiagram>

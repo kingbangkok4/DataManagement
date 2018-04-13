@@ -54,6 +54,400 @@ namespace DataManagement.Business.Models
 		{
 			OnCreated();
 		}
+		
+		public System.Data.Linq.Table<ReservationModel> ReservationModels
+		{
+			get
+			{
+				return this.GetTable<ReservationModel>();
+			}
+		}
+		
+		public System.Data.Linq.Table<BorrowModel> BorrowModels
+		{
+			get
+			{
+				return this.GetTable<BorrowModel>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class ReservationModel
+	{
+		
+		private long _ReservationID;
+		
+		private string _RoomID;
+		
+		private string _PersonalID;
+		
+		private System.Nullable<System.DateTimeOffset> _ReservationDate;
+		
+		private System.Nullable<System.TimeSpan> _StartTime;
+		
+		private System.Nullable<System.TimeSpan> _EndTime;
+		
+		private string _PersonalName;
+		
+		private string _Posision;
+		
+		private string _RoomDetail;
+		
+		private int _Count;
+		
+		public ReservationModel()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReservationID")]
+		public long ReservationID
+		{
+			get
+			{
+				return this._ReservationID;
+			}
+			set
+			{
+				if ((this._ReservationID != value))
+				{
+					this._ReservationID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomID", CanBeNull=false)]
+		public string RoomID
+		{
+			get
+			{
+				return this._RoomID;
+			}
+			set
+			{
+				if ((this._RoomID != value))
+				{
+					this._RoomID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PersonalID", CanBeNull=false)]
+		public string PersonalID
+		{
+			get
+			{
+				return this._PersonalID;
+			}
+			set
+			{
+				if ((this._PersonalID != value))
+				{
+					this._PersonalID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReservationDate")]
+		public System.Nullable<System.DateTimeOffset> ReservationDate
+		{
+			get
+			{
+				return this._ReservationDate;
+			}
+			set
+			{
+				if ((this._ReservationDate != value))
+				{
+					this._ReservationDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartTime")]
+		public System.Nullable<System.TimeSpan> StartTime
+		{
+			get
+			{
+				return this._StartTime;
+			}
+			set
+			{
+				if ((this._StartTime != value))
+				{
+					this._StartTime = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndTime")]
+		public System.Nullable<System.TimeSpan> EndTime
+		{
+			get
+			{
+				return this._EndTime;
+			}
+			set
+			{
+				if ((this._EndTime != value))
+				{
+					this._EndTime = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PersonalName", CanBeNull=false)]
+		public string PersonalName
+		{
+			get
+			{
+				return this._PersonalName;
+			}
+			set
+			{
+				if ((this._PersonalName != value))
+				{
+					this._PersonalName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Posision", CanBeNull=false)]
+		public string Posision
+		{
+			get
+			{
+				return this._Posision;
+			}
+			set
+			{
+				if ((this._Posision != value))
+				{
+					this._Posision = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomDetail", CanBeNull=false)]
+		public string RoomDetail
+		{
+			get
+			{
+				return this._RoomDetail;
+			}
+			set
+			{
+				if ((this._RoomDetail != value))
+				{
+					this._RoomDetail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Count")]
+		public int Count
+		{
+			get
+			{
+				return this._Count;
+			}
+			set
+			{
+				if ((this._Count != value))
+				{
+					this._Count = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class BorrowModel
+	{
+		
+		private long _BorrowID;
+		
+		private long _ResourceID;
+		
+		private string _ResourceName;
+		
+		private string _ResourceDetail;
+		
+		private string _PersonalID;
+		
+		private string _PersonalName;
+		
+		private System.Nullable<System.DateTime> _BorrowDT;
+		
+		private string _StaffID;
+		
+		private System.Nullable<System.DateTime> _ReturnDT;
+		
+		private int _Numborrow;
+		
+		public BorrowModel()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BorrowID")]
+		public long BorrowID
+		{
+			get
+			{
+				return this._BorrowID;
+			}
+			set
+			{
+				if ((this._BorrowID != value))
+				{
+					this._BorrowID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResourceID")]
+		public long ResourceID
+		{
+			get
+			{
+				return this._ResourceID;
+			}
+			set
+			{
+				if ((this._ResourceID != value))
+				{
+					this._ResourceID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResourceName", CanBeNull=false)]
+		public string ResourceName
+		{
+			get
+			{
+				return this._ResourceName;
+			}
+			set
+			{
+				if ((this._ResourceName != value))
+				{
+					this._ResourceName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResourceDetail", CanBeNull=false)]
+		public string ResourceDetail
+		{
+			get
+			{
+				return this._ResourceDetail;
+			}
+			set
+			{
+				if ((this._ResourceDetail != value))
+				{
+					this._ResourceDetail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PersonalID", CanBeNull=false)]
+		public string PersonalID
+		{
+			get
+			{
+				return this._PersonalID;
+			}
+			set
+			{
+				if ((this._PersonalID != value))
+				{
+					this._PersonalID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PersonalName", CanBeNull=false)]
+		public string PersonalName
+		{
+			get
+			{
+				return this._PersonalName;
+			}
+			set
+			{
+				if ((this._PersonalName != value))
+				{
+					this._PersonalName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BorrowDT")]
+		public System.Nullable<System.DateTime> BorrowDT
+		{
+			get
+			{
+				return this._BorrowDT;
+			}
+			set
+			{
+				if ((this._BorrowDT != value))
+				{
+					this._BorrowDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StaffID", CanBeNull=false)]
+		public string StaffID
+		{
+			get
+			{
+				return this._StaffID;
+			}
+			set
+			{
+				if ((this._StaffID != value))
+				{
+					this._StaffID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReturnDT")]
+		public System.Nullable<System.DateTime> ReturnDT
+		{
+			get
+			{
+				return this._ReturnDT;
+			}
+			set
+			{
+				if ((this._ReturnDT != value))
+				{
+					this._ReturnDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Numborrow")]
+		public int Numborrow
+		{
+			get
+			{
+				return this._Numborrow;
+			}
+			set
+			{
+				if ((this._Numborrow != value))
+				{
+					this._Numborrow = value;
+				}
+			}
+		}
 	}
 }
 #pragma warning restore 1591
