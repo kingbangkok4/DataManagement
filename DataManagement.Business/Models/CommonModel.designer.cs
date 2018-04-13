@@ -283,7 +283,7 @@ namespace DataManagement.Business.Models
 		
 		private System.Nullable<System.DateTime> _ReturnDT;
 		
-		private int _Numborrow;
+		private System.Nullable<int> _Numborrow;
 		
 		public BorrowModel()
 		{
@@ -434,7 +434,7 @@ namespace DataManagement.Business.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Numborrow")]
-		public int Numborrow
+		public System.Nullable<int> Numborrow
 		{
 			get
 			{

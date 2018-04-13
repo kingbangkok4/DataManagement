@@ -2,52 +2,85 @@
 @using DataManagement.Business.Models
 @model IEnumerable<ReservationModel>
 
+@{
+    ViewData["Title"] = "รายงานการจองห้องสอน(OLAP)";
+}
+<div class="page-header">
+    <div class="tool-buttons" padding-bottom:5px;">
+        <div class="row">
+            <div class="col-md-6">
+                @*<a class="btn btn-success" style="width: 120px;" href="#" onclick="_Save()"><span class="fa fa-save"></span> บันทึก</a>
+                    <a class="btn btn-danger" style="width: 150px;" href="#" onclick=""><span class="fa fa-reply"></span> ล้างข้อมูล</a>*@
+            </div>
+            <div class="col-md-6 pull-right">
+                @*<h1>@ViewData["Title"]<small></small></h1>*@
+                <span class="pull-right" style="margin-right:10px;"><b>@ViewData["Title"]</b></span>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="responsive-message"></div>
+<div class="tab-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-mode box box-primary">
+                <div class="box-header with-border">
+                    <h4 class="box-title">ข้อมูล</h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        @*<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding content-margin">
+                    @(Html.Kendo().PivotConfigurator()
+                                                                    .Name("configurator")
+                                                                    .HtmlAttributes(new { @class = "hidden-on-narrow" })
+                                                                    .Filterable(true)
+                                                                    .Sortable()
+                                                                    .Height(400)
+                    )
 
-@(Html.Kendo().PivotConfigurator()
-            .Name("configurator")
-            .HtmlAttributes(new { @class = "hidden-on-narrow" })
-            .Filterable(true)
-            .Sortable()
-            .Height(400)
-)
-
-@(Html.Kendo().PivotGrid<ReservationModel>()
-            .Name("pivotgrid")
-            .HtmlAttributes(new { @class = "hidden-on-narrow" })
-            .Filterable(true)
-            .Sortable()
-            .Configurator("#configurator")
-            .ColumnWidth(120)
-            .Height(570)
-            .BindTo(Model)
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Schema(schema => schema
-                    .Model(m => m.Field("PersonalID", typeof(string)).From("PersonalID"))
-                    .Cube(cube => cube
-                        .Dimensions(dimensions =>
-                        {
-                            dimensions.Add(model => model.ReservationID).Caption("รหัสการจอง");
-                            dimensions.Add(model => model.RoomID).Caption("รหัสห้อง");
-                            dimensions.Add(model => model.PersonalID).Caption("ผู้จอง");
-                        })
-                    .Measures(measures =>
-                    {
-                        measures.Add("Average").Field(model => model.RoomID).AggregateName("Average");
-                        measures.Add("Sum").Field(model => model.Count).AggregateName("Sum");
-                    })
-                    ))
-                .Columns(columns =>
-                {
-                    columns.Add("ReservationID").Expand(true);
-                    columns.Add("RoomID");
-                })
-                //.Rows(rows => rows.Add("Discontinued").Expand(true))
-                .Measures(measures => measures.Values("Sum"))
-                .Events(e => e.Error("onError"))
-            )
-)
+                    @(Html.Kendo().PivotGrid<ReservationModel>()
+                                                                    .Name("pivotgrid")
+                                                                    .HtmlAttributes(new { @class = "hidden-on-narrow" })
+                                                                    .Filterable(true)
+                                                                    .Sortable()
+                                                                    .Configurator("#configurator")
+                                                                    .ColumnWidth(120)
+                                                                    .Height(570)
+                                                                    .BindTo(Model)
+                                                                    .DataSource(dataSource => dataSource
+                                                                        .Ajax()
+                                                                        .Schema(schema => schema
+                                                                            .Model(m => m.Field("PersonalID", typeof(string)).From("PersonalID"))
+                                                                            .Cube(cube => cube
+                                                                                .Dimensions(dimensions =>
+                                                                                {
+                                                                                    dimensions.Add(model => model.ReservationID).Caption("รหัสการจอง");
+                                                                                    dimensions.Add(model => model.RoomID).Caption("รหัสห้อง");
+                                                                                    dimensions.Add(model => model.PersonalID).Caption("ผู้จอง");
+                                                                                })
+                                                                            .Measures(measures =>
+                                                                            {
+                                                                                measures.Add("Average").Field(model => model.RoomID).AggregateName("Average");
+                                                                                measures.Add("Sum").Field(model => model.Count).AggregateName("Sum");
+                                                                            })
+                                                                            ))
+                                                                        .Columns(columns =>
+                                                                        {
+                                                                            columns.Add("ReservationID").Expand(true);
+                                                                            columns.Add("RoomID");
+                                                                        })
+                                                                        //.Rows(rows => rows.Add("Discontinued").Expand(true))
+                                                                        .Measures(measures => measures.Values("Sum"))
+                                                                        .Events(e => e.Error("onError"))
+                                                                    )
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function onError(e) {

@@ -24,7 +24,7 @@
       <Column Member="BorrowDT" Type="System.DateTime" CanBeNull="true" />
       <Column Member="StaffID" Type="System.String" CanBeNull="false" />
       <Column Member="ReturnDT" Type="System.DateTime" CanBeNull="true" />
-      <Column Member="Numborrow" Type="System.Int32" CanBeNull="false" />
+      <Column Member="Numborrow" Type="System.Int32" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

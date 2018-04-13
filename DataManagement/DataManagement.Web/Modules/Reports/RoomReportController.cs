@@ -42,28 +42,5 @@ namespace DataManagement.Modules.Report.Page
             return View(MVC.Views.DataManagement.RoomReportPage, model);
         }
 
-         public ActionResult GetReservation([DataSourceRequest]DataSourceRequest request, string roomID = "")
-        {
-            var db = DataManagement.Modules.Common.CommonClass.GetMathematicsDataContext();
-
-            var ret = ReservationBL.GetReservation(db, "", true);
-
-            if (ret != null && ret.Count() > 0)
-            {
-                DataSourceResult data = ret.ToDataSourceResult(request, m => new DataManagement.Business.Models.Reservation
-                {
-                    ReservationID = m.ReservationID,
-                    RoomID = m.RoomID,
-                    PersonalID = m.PersonalID,
-                    ReservationDate = m.ReservationDate,
-                    StartTime = m.StartTime,
-                    EndTime = m.EndTime
-                });
-                return Json(data);
-            }
-            // return Json(new { result = data }, JsonRequestBehavior.AllowGet);
-            return null;
-        }
-
     }
 }
