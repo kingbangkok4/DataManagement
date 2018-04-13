@@ -938,8 +938,8 @@
     <Content Include="Scripts\kendo\2016.1.226\angular.min.js" />
     <Content Include="Scripts\kendo\2016.1.226\jquery.min.js" />
     <Content Include="Scripts\kendo\2016.1.226\jszip.min.js" />
-    <Content Include="Modules\Report\ResourceReport.cshtml" />
-    <Content Include="Modules\Report\RoomReport.cshtml" />
+    <Content Include="Modules\Reports\ResourceReport.cshtml" />
+    <Content Include="Modules\Reports\RoomReport.cshtml" />
     <Content Include="Modules\Resource\ReturnResourcec.cshtml" />
     <Content Include="Modules\Resource\Resource.cshtml" />
     <Content Include="Modules\Room\Room.cshtml" />
@@ -2375,8 +2375,8 @@
     <Compile Include="Modules\Common\UserPreference\UserPreferenceRow.cs" />
     <Compile Include="Modules\Common\Helpers\GetNextNumberHelper.cs" />
     <Compile Include="Modules\Common\Helpers\GetNextNumberRequest.cs" />
-    <Compile Include="Modules\Report\ResourceReportController.cs" />
-    <Compile Include="Modules\Report\RoomReportController.cs" />
+    <Compile Include="Modules\Reports\ResourceReportController.cs" />
+    <Compile Include="Modules\Reports\RoomReportController.cs" />
     <Compile Include="Modules\Resource\ResourceController.cs" />
     <Compile Include="Modules\Resource\ReturnResourceController.cs" />
     <Compile Include="Modules\Room\RoomController.cs" />

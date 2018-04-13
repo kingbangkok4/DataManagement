@@ -396,8 +396,8 @@ namespace MVC
             public const string RoomPage = "~/Modules/Room/Room.cshtml";
             public const string ResourcePage = "~/Modules/Resource/Resource.cshtml";
             public const string ReturnResourcecPage = "~/Modules/Resource/ReturnResourcec.cshtml";
-            public const string RoomReportPage = "~/Modules/Report/RoomReport.cshtml";
-            public const string ResourceReportPage = "~/Modules/Resource/ResourceReport.cshtml";
+            public const string RoomReportPage = "~/Modules/Reports/RoomReport.cshtml";
+            public const string ResourceReportPage = "~/Modules/Reports/ResourceReport.cshtml";
         }
     }
 }
